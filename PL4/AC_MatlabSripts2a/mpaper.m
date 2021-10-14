@@ -185,9 +185,19 @@ function Dn(varargin)
  %MATLAB formatted binary file (MAT-file) called FILENAME.
  % We want to save only P, and for that we must specify that we only want
  % to save P; for that we must write
- 
+%{
               save P.mat P
-           
+              
+ %}             
+ 
+              if ~isfile('P.mat')
+                  P=data.X;
+              else
+                  load 'P.mat' P
+                  P=[P data.X];
+              end
+              save P.mat P
+          
  % and a mat file called P is created having inside the matrix P.Then we can
  % load P, and rename the matrix P, by clicking on P with the right mouse
  % button and chose Rename.By this way we can create several matrices with
@@ -206,7 +216,7 @@ function Dn(varargin)
  % neste momento estão na directoria de trabalho a matriz P.mat e o vector ind.mat.
  % não usar este ficheiro para  a classificação; por isso comentar sempre a linha seguinte 
  
-             feval(options.fun,data);
+             %feval(options.fun,data);
              
  % feval vai calcular a função options.fun, que por defeito é a ocr_fun;
  % ocr_fun chama a função myclassify que deve ser escrita pelo utilizador. 
