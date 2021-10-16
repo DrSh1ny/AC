@@ -23,4 +23,3 @@ net=train(net,P(:,1:nAmostras),t(:,1:nAmostras));
 
 q=sim(net,P);
 
-perform(net,t,q)

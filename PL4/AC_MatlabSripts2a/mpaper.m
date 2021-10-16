@@ -170,25 +170,11 @@ function Dn(varargin)
                 end
              end
              
- % Até aqui foi digitalizada a quadrícula 5x10, estando os resultados
- % em data.X. Seguindo a notação usada na aula teórica, poderemos
- % construir a partir deles o vector de entradas P, fazendo simplesmente
- % ativar a criação de P
- 
+ %________________________codigo a alterar_______________________________
+ %{
              P=data.X;
-             ind=find( sum(data.X) ~= 0);% considerar em ind as colunas de soma não-nula; se uma coluna tem soma nula,
-               % é porque no quadrado respectivo se escreveu nada(não há qualquer 1).
- %              
- %            save P
- %save Save workspace variables to file. (from help save).
- %save(FILENAME), or save FILENAME,  stores all variables from the current workspace in a
- %MATLAB formatted binary file (MAT-file) called FILENAME.
- % We want to save only P, and for that we must specify that we only want
- % to save P; for that we must write
-%{
-              save P.mat P
-              
- %}             
+             ind=find( sum(data.X) ~= 0);
+             
  
               if ~isfile('P.mat')
                   P=data.X;
@@ -198,38 +184,12 @@ function Dn(varargin)
               end
               save P.mat P
           
- % and a mat file called P is created having inside the matrix P.Then we can
- % load P, and rename the matrix P, by clicking on P with the right mouse
- % button and chose Rename.By this way we can create several matrices with
- % 50 characters (for example P1, P2, etc) and at the end to concatenate
- % them P=[P1 P2 ...] obtaining the input matrix for the classifier. At the
- % end we write save P and the total matrix P is daved as P.mat containing
- % only the matrix P.
- 
- % By the same reason, to save only ind we write
- 
              save ind.mat ind
+%}           
+             feval(options.fun,data);
              
- % para se analisar o procedimento de leitura do desenho, sua representação
- % em binário e depois a construção de data.X, ver o ficheiro bmp e a
- % função bmp2plot mais à frente
- % neste momento estão na directoria de trabalho a matriz P.mat e o vector ind.mat.
- % não usar este ficheiro para  a classificação; por isso comentar sempre a linha seguinte 
- 
-             %feval(options.fun,data);
-             
- % feval vai calcular a função options.fun, que por defeito é a ocr_fun;
- % ocr_fun chama a função myclassify que deve ser escrita pelo utilizador. 
- %
- % Se se pretender usar a função para definir a matriz T dos alvos, deve
- % activar-se a linha seguinte e desactivar a anterior save P.
- % Para criar P devem desativar-se comentando-as
- %          T=data.X;
- %          save T
- %
- % Pode confirmar usando a grafica para desenhar os alvos na quadrícula
- % 16x16.
- 
+%________________________codigo a alterar_______________________________
+
            else             
              figure; 
              imshow(bmp,[]);
