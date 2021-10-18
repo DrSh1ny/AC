@@ -185,9 +185,9 @@ function Dn(varargin)
               save P.mat P
           
              save ind.mat ind
-%}           
+ %}          
              feval(options.fun,data);
-             
+           
 %________________________codigo a alterar_______________________________
 
            else             

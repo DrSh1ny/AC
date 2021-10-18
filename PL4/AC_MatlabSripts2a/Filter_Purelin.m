@@ -1,5 +1,5 @@
 load P.mat P
-net = network(1,2,[1;1],[1;0],[0 0;1 0],[0 1]);
+net = network(1,2,[0;1],[1;0],[0 0;1 0],[0 1]);
 
 net.layers{1}.transferFcn = 'purelin';
 net.layers{2}.transferFcn = 'purelin';
@@ -24,4 +24,3 @@ t=repmat(t,1,75);
 net=train(net,P(:,1:nAmostras),t(:,1:nAmostras));
 
 q=sim(net,P);
-
