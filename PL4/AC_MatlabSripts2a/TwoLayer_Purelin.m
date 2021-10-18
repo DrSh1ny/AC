@@ -1,11 +1,13 @@
 load P.mat P
-net = network(1,1,[1],[1],[0],[1]);
+net = network(1,2,[1;1],[1;0],[0 0;1 0],[0 1]);
 net.layers{1}.transferFcn = 'purelin';
+net.layers{2}.transferFcn = 'purelin';
 
 rangeInp=[0 1];
 rangeInp=repmat(rangeInp,256,1);
 net.inputs{1}.size=256;
 net.inputs{1}.range=rangeInp;
+net.layers{1}.size=20;
 
 
 net.trainFcn = 'traingda';
@@ -18,7 +20,6 @@ net.performFcn = 'sse'; % criterion
 nAmostras=600;
 t = eye(10);
 t=repmat(t,1,60);
-
 net=train(net,P(:,1:nAmostras),t(:,1:nAmostras));
 
 q=sim(net,P);
