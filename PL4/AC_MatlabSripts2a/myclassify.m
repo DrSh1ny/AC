@@ -4,7 +4,9 @@ function [Y] = myclassify(X,filled_inx)
 size(X)
 load net.mat net
 q=sim(net,X(:,filled_inx));
+q
 [M,I]=max(q);
 Y=mod(I,10);
+Y
 end
 
