@@ -171,7 +171,7 @@ function Dn(varargin)
              end
              
  %________________________codigo a alterar_______________________________
- %{
+
              P=data.X;
              ind=find( sum(data.X) ~= 0);
              
@@ -185,8 +185,8 @@ function Dn(varargin)
               save P.mat P
           
              save ind.mat ind
- %}          
-             feval(options.fun,data);
+             
+             %feval(options.fun,data);
            
 %________________________codigo a alterar_______________________________
 

@@ -18,9 +18,10 @@ net.trainParam.show = 40; % show
 net.trainParam.goal = 1e-6; % goal=objective
 net.performFcn = 'sse'; % criterion
 
-nAmostras=750;
+nAmostras=900;
 t = eye(10);
-t=repmat(t,1,75);
+t=repmat(t,1,90);
+
 net=train(net,P(:,1:nAmostras),t(:,1:nAmostras));
 
 q=sim(net,P);
