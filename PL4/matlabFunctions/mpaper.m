@@ -177,6 +177,8 @@ switch get(gcf, 'SelectionType')   % clicked mouse button
                 save P.mat P;
                 save ind.mat ind;
                 
+                %Run GUI and see results
+                gui()
                 
             else
                 figure;

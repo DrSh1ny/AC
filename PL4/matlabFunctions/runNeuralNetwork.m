@@ -5,11 +5,11 @@ function runNeuralNetwork(filter, layerNumber,activationFunction)
     layerNumbers=['1' '2'];
     activationFunctions=['Linear' 'Hard Limit' 'Sigmoidal'];
     
-    
-    net = append('net_', layerNumber)
-    net = append(net, '_')
-    net = append(net, activationFunction)
-    net = append(net, '.mat')
+    net = append(filter, '_');
+    net = append(net, layerNumber);
+    net = append(net, '_');
+    net = append(net, activationFunction);
+    net = append(net, '.mat');
   
     
     %#function network 
