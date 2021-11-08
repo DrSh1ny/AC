@@ -122,10 +122,11 @@
 % rng(23423);
 % net=train(net,totalX,t);
 % disp(testNeuralNetwork(net,testX,testY));
-% save  net_2_linear net net;
+
+%save  None_2_Linear net;
 
 
-%-----------Network 2 Layer Simoid--------------
+%-----------Network 2 Layer Sigmoid--------------
 load 'dataset.mat'
 [numRows,nAmostras] = size(totalX);
 t = zeros(10,nAmostras);
@@ -136,15 +137,19 @@ t = zeros(10,nAmostras);
          t(totalY(i),i)=1;
      end
  end
-net = feedforwardnet(20);
+net = feedforwardnet(40);
+%net.layers{1}.transferFcn = 'hardlim';
+%net.layers{2}.transferFcn = 'hardlim';
+net.trainFcn = 'traingd';
+net.trainParam.lr = 0.05; % learning rate
+net.trainParam.epochs = 2000; % maximum epochs
 net.divideFcn='dividerand';
 net.divideParam.trainRatio = 80/100;
 net.divideParam.valRatio   = 10/100;
 net.divideParam.testRatio  = 10/100;
 [net,tr] = train(net,totalX,t);
 disp(testNeuralNetwork(net,testX,testY));
-save  net_2_sig net;
-
+save  None_2_Sigmoidal net;
 
 %-----------Filter 1 Layer Hard Limit--------------
 % net = perceptron;
