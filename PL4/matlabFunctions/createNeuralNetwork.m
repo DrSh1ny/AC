@@ -27,7 +27,7 @@
 % rng(23423);
 % net=train(net,totalX,t);
 % disp(testNeuralNetwork(net,testX,testY));
-% save  net_1_linear net;
+% save  None_1_Linear net;
 
 
 
@@ -61,7 +61,7 @@
 % rng(23424);
 % net=train(net,totalX,t);
 % disp(testNeuralNetwork(net,testX,testY));
-% save  net_1_sig  net;
+% save  None_1_Sigmoidal  net;
 
 
 %-----------Network 1 Layer Hard Limit--------------
@@ -87,7 +87,7 @@
 % rng(567);
 % net=train(net,totalX,t);
 % disp(testNeuralNetwork(net,testX,testY));
-% save  net_1_hardlim net;
+% save  'None_1_Hard Limit' net;
 
 
 %-----------Network 2 Layer Linear--------------
@@ -168,5 +168,5 @@ save  None_2_Sigmoidal net;
 % rng(567);
 % net=train(net,totalX,t);
 % %disp(testNeuralNetwork(net,testX,testY));
-% save  filter_1_hardlim net;
+% save  'Binary Perceptron_1_Hard Limit' net;
 
