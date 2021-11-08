@@ -126,24 +126,41 @@
 
 
 %-----------Network 2 Layer Simoid--------------
-load 'dataset.mat'
-[numRows,nAmostras] = size(totalX);
-t = zeros(10,nAmostras);
- for i=1:nAmostras
-     if(totalY(i)==0)
-         t(10,i)=1;
-     else
-         t(totalY(i),i)=1;
-     end
- end
-net = feedforwardnet(20);
-net.divideFcn='dividerand';
-net.divideParam.trainRatio = 80/100;
-net.divideParam.valRatio   = 10/100;
-net.divideParam.testRatio  = 10/100;
-[net,tr] = train(net,totalX,t);
-disp(testNeuralNetwork(net,testX,testY));
-save  net_2_sig net;
+% net = network(1,2,[1;1],[1;0],[0,0;1,0],[0,1]);
+% 
+% net.layers{1}.transferFcn = 'logsig';
+% net.layers{2}.transferFcn = 'logsig';
+% net.layers{1}.size = 20;
+% net.layers{2}.size = 10;
+% 
+% 
+% net.trainFcn = 'traingda';
+% net.performFcn = 'mse'; % criterion
+% net.trainParam.lr = 0.01; % learning rate
+% net.trainParam.epochs = 200; % maximum epochs
+% net.divideFcn='dividerand';
+% net.divideParam.trainRatio = 80/100;
+% net.divideParam.valRatio   = 10/100;
+% net.divideParam.testRatio  = 10/100;
+% 
+% load 'dataset.mat'
+% [numRows,nAmostras] = size(totalX);
+% t = zeros(10,nAmostras);
+% for i=1:nAmostras
+%     if(totalY(i)==0)
+%         t(10,i)=1;
+%     else
+%         t(totalY(i),i)=1;
+%     end
+% end
+% 
+% rng(23423);
+% net=train(net,totalX,t);
+% disp(testNeuralNetwork(net,testX,testY));
+% save  net_2_sig net;
+net = feedforwardnet(10);
+[net,tr] = train(net,trainX,trainY);
+
 
 
 %-----------Filter 1 Layer Hard Limit--------------
