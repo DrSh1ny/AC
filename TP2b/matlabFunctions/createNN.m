@@ -50,4 +50,6 @@ q=softmax(q);
 equalClassification=sum(I==testY);
 nSamples=length(testY);
 accuracy=equalClassification./nSamples;
-disp(accuracy);
+[sensibility, specificity] = Measures(testY, I);
+X = sprintf(' Accuracy: %.4f \n Sensibility %.4f \n Specificity %.4f',accuracy, sensibility, specificity);
+disp(X);
