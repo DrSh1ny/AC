@@ -1,3 +1,4 @@
+% - Discover
 % [trainX,trainY,testX,testY]=loadDataset("../dataset/44202.mat",0.8);
 % trainY(find(trainY==3))=1;
 % testY(find(testY==3))=1;
@@ -17,19 +18,17 @@
 % rng(1);
 % [net,tr] = train(net,trainX,targets);
 % 
-% q=sim(net,testX);
-% q=softmax(q);
-% [M,I]=max(q);
-% equalClassification=sum(I==testY);
-% nSamples=length(testY);
-% accuracy=equalClassification./nSamples;
-% disp(accuracy);
+% [accuracy, sensibility, specificity] = Measures(net, testX, testY);
+% X = sprintf(' Accuracy: %.4f \n Sensibility %.4f \n Specificity %.4f',accuracy, sensibility, specificity);
+% disp(X);
 
-[trainX,trainY,testX,testY]=loadDataset("../dataset/44202.mat",0.8);
+
+% - Predict
+[trainX,trainY,testX,testY]=loadDataset("../dataset/63502.mat",0.8);
 trainY(find(trainY==3))=2;
 testY(find(testY==3))=2;
-targets=zeros(2,8073);
-for i=1:8073
+targets=zeros(2,size(trainY,2));
+for i=1:size(trainY, 2)
     targets(trainY(i),i)=1;
 end
 
@@ -44,12 +43,7 @@ net.divideParam.testRatio  = 0/100;
 rng(1);
 [net,tr] = train(net,trainX,targets);
 
-q=sim(net,testX);
-q=softmax(q);
-[M,I]=max(q);
-equalClassification=sum(I==testY);
-nSamples=length(testY);
-accuracy=equalClassification./nSamples;
-[sensibility, specificity] = Measures(testY, I);
+
+[accuracy, sensibility, specificity] = Measures(net, testX, testY);
 X = sprintf(' Accuracy: %.4f \n Sensibility %.4f \n Specificity %.4f',accuracy, sensibility, specificity);
 disp(X);
