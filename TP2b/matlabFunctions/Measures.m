@@ -1,4 +1,4 @@
-function [accuracy, sensibility, specificity] = Measures(net, testX, testY)
+function [accuracy, sensitivity, specificity] = Measures(net, testX, testY,detectionMode)
 
 %Accuracy
 q=sim(net,testX);
@@ -11,16 +11,21 @@ accuracy=equalClassification./nSamples;
 
 %Sensibility and Specificity
 mat = confusionmat(testY, predY)
-%[tn, fp , fn ,tp] = mat;
-arr = mat';
-arr = arr(:)';
-tn = arr(1);
-fn = arr(2);
-fp = arr(3);
-tp = arr(4);
 
 
-sensibility = tp ./(tp + fn);
+if detectionMode==1
+    tp=sum((predY==2) & (testY==2));
+    fp=sum((predY==2) & (testY~=2));
+    tn=sum((predY~=2) & (testY~=2));
+    fn=sum((predY~=2) & (testY==2));
+else
+    tp=sum((predY==1) & (testY==1));
+    fp=sum((predY==1) & (testY~=1));
+    tn=sum((predY~=1) & (testY~=1));
+    fn=sum((predY~=1) & (testY==1));
+end
+
+sensitivity = tp ./(tp + fn);
 specificity = tn ./(tn + fp);
 
 
