@@ -1,9 +1,6 @@
-function [accuracy, sensitivity, specificity] = Measures(net, testX, testY,detectionMode)
+function [accuracy, sensitivity, specificity] = Measures(predY, testY,detectionMode)
 
 %Accuracy
-q=sim(net,testX);
-q=softmax(q);
-[M, predY]=max(q);
 equalClassification=sum(predY==testY);
 nSamples=length(testY);
 accuracy=equalClassification./nSamples;

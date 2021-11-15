@@ -15,7 +15,10 @@ net.divideParam.testRatio  = 0/100;
 rng(1);
 [net,tr] = train(net,trainX,targets);
 
-[accuracy, sensibility, specificity] = Measures(net, testX, testY,1);
+q=sim(net,testX);
+q=softmax(q);
+[M, predY]=max(q);
+[accuracy, sensibility, specificity] = Measures(predY, testY,1);
 X = sprintf(' Accuracy: %.4f \n Sensibility %.4f \n Specificity %.4f',accuracy, sensibility, specificity);
 disp(X);
 
