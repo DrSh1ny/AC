@@ -11,10 +11,10 @@ for i=1:size(testY,2)
 end
 %transformar dataset de matrix para cells
 trainX=num2cell(trainX,1);
-targetsTrain=num2cell(targetsTrain,1);
 testX=num2cell(testX,1);
+targetsTrain=num2cell(targetsTrain,1);
 targetsTest=num2cell(targetsTest,1);
-%criar network e trainar
+%criar network e treinar
 net = narxnet([1:2],[1:2],10);
 [Xs,Xi,Ai,Ts] = preparets(net,trainX,{},targetsTrain);
 rng(1);

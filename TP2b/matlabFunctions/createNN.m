@@ -1,5 +1,5 @@
 pacients=["../dataset/44202.mat","../dataset/63502.mat"];
-[trainX,trainY,testX,testY]=loadDataset(pacients(1),0.8);
+[trainX,trainY,testX,testY]=loadDataset(pacients(2),0.8);
 targets=zeros(3,size(trainY,2));
 for i=1:size(trainY,2)
     targets(trainY(i),i)=1;

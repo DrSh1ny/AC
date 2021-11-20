@@ -24,12 +24,9 @@
 %     end
 % end
 % 
-% rng(23423);
 % net=train(net,totalX,t);
 % disp(testNeuralNetwork(net,testX,testY));
 % save  None_1_Linear net;
-
-
 
 
 %-----------Network 1 Layer Sigmoid--------------
@@ -58,7 +55,6 @@
 %     end
 % end
 % 
-% rng(23424);
 % net=train(net,totalX,t);
 % disp(testNeuralNetwork(net,testX,testY));
 % save  None_1_Sigmoidal  net;
@@ -66,7 +62,6 @@
 
 %-----------Network 1 Layer Hard Limit--------------
 % net = perceptron;
-% net.trainParam.lr = 0.01; % learning rate
 % net.trainParam.epochs = 200; % maximum epochs
 % net.divideFcn='dividerand';
 % net.divideParam.trainRatio = 80/100;
@@ -84,7 +79,6 @@
 %     end
 % end
 % 
-% rng(567);
 % net=train(net,totalX,t);
 % disp(testNeuralNetwork(net,testX,testY));
 % save  'None_1_Hard Limit' net;
@@ -149,12 +143,8 @@
 % disp(accur);
 % save  None_2_Sigmoidal net;
 
-
-
-
 %-----------Filter 1 Layer Hard Limit--------------
 % net = perceptron;
-% net.trainParam.lr = 0.01; % learning rate
 % net.trainParam.epochs = 50; % maximum epochs
 % net.divideFcn='dividerand';
 % net.divideParam.trainRatio = 80/100;
@@ -165,73 +155,17 @@
 % [numRows,nAmostras] = size(totalX);
 % t = repmat(Perfect,1,100);
 % 
-% 
-% rng(567);
 % net=train(net,totalX,t);
-% %disp(testNeuralNetwork(net,testX,testY));
+% disp(testNeuralNetwork(net,testX,testY));
 % save  'Binary Perceptron_1_Hard Limit' net;
 
-%-----------Filter + Classifier Layer--------------
-load 'dataset.mat'
-load 'Perfect.mat'
-[numRows,nAmostras] = size(totalX);
 
-%Associative Memory
-inv = pinv(totalX);
-T = repmat(Perfect,1, 100);
-Wp = T * inv;
-
-P2 = Wp * totalX;
-
-%Binary Perceptron
-net = perceptron;
-net.trainParam.lr = 0.01; % learning rate
-net.trainParam.epochs = 50; % maximum epochs
-net.divideFcn='dividerand';
-net.divideParam.trainRatio = 80/100;
-net.divideParam.valRatio   = 10/100;
-net.divideParam.testRatio  = 10/100;
-    
-load 'dataset.mat'
-[numRows,nAmostras] = size(totalX);
-t = repmat(Perfect,1,100);
-
-
-rng(567);
-net=train(net,totalX,t);
-P3=sim(net,totalX);
-
-net = network(1,1,[1],[1],[0],[1]);
-
-net.layers{1}.transferFcn = 'logsig';
-net.layers{1}.size = 10;
-    
-net.trainFcn = 'traingda';
-net.performFcn = 'mse'; % criterion
-net.trainParam.lr = 0.01; % learning rate
-net.trainParam.epochs = 200; % maximum epochs
-net.divideFcn='dividerand';
-net.divideParam.trainRatio = 80/100;
-net.divideParam.valRatio   = 10/100;
-net.divideParam.testRatio  = 10/100;
-
-load 'dataset.mat'
-[numRows,nAmostras] = size(P2);
-t = zeros(10,nAmostras);
-for i=1:nAmostras
-    if(totalY(i)==0)
-        t(10,i)=1;
-    else
-        t(totalY(i),i)=1;
-    end
-end
-
-rng(2342);
-net=train(net,totalX,t);
-
-%Teste com filtro
-disp(testNeuralNetwork(net,P2,totalY));
-%Teste com Perceptron
-disp(testNeuralNetwork(net,P3,totalY));
-%Teste sem filtro
-disp(testNeuralNetwork(net,totalX,totalY));
+% load 'dataset.mat'
+% load 'Perfect.mat'
+% [numRows,nAmostras] = size(totalX);
+%  
+% inv = pinv(totalX);
+% T = repmat(Perfect,1, 100);
+% 
+% Wp = T * inv;
+% save 'Associative Memory_1_Linear.mat' Wp;
