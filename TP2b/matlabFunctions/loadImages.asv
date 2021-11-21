@@ -1,0 +1,30 @@
+function [trainXIm,trainYIm,testXIm,testYIm] = loadImages(path,trainPortion)
+    [trainX,trainY,testX,testY]=loadDataset(path,trainPortion);
+    originalX=[trainX testX];
+    originalY=[trainY testY];
+    
+    originalX = normalize(originalX,'range');
+    
+    preictal=originalX(:,find(originalY==1));
+    ictal=originalX(:,find(originalY==2));
+    posictal=originalX(:,find(originalY==3));
+    
+    imagesPreictal={};
+    for i=[1:29:size(preictal,2)-29]
+        image=preictal(:,i:i+28);
+        imagesPreictal{end+1}=image;
+    end
+    
+    imagesIctal=zeros(
+    for i=[1:29:size(preictal,2)-29]
+        image=ictal(:,i:i+28);
+        imagesIctal=cat(4,image;
+    end
+    
+    imagesPosictal={};
+    for i=[1:29:size(preictal,2)-29]
+        image=posictal(:,i:i+28);
+        imagesPosictal{end+1}=image;
+    end
+end
+
