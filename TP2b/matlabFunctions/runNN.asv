@@ -1,6 +1,6 @@
 function [sensitivity ,specificity] = runNN(Pacient , NeuralNetwork, DetectionMode, trainMode)
     
-    NeuralNetworks = ["FeedForward", "DynamicNN", "CNN", "LSTM"];
+    NeuralNetworks = ['FeedForward', 'DynamicNN', 'CNN', 'LSTM'];
     prob = 0.8;
     
     net = append(Pacient, '_');
@@ -12,9 +12,8 @@ function [sensitivity ,specificity] = runNN(Pacient , NeuralNetwork, DetectionMo
     rng_value = 1;
     
     Pacient = append("../dataset/",Pacient);
-    disp(NeuralNetworks(1))
-    disp(NeuralNetwork)
-    if NeuralNetwork == NeuralNetworks(4)
+    
+    if NeuralNetwork == NeuralNetworks(3)
         [trainX,trainY,testX,testY]=loadDataset(Pacient,prob);
         
         trainX = normalize(trainX,'range');
@@ -25,33 +24,11 @@ function [sensitivity ,specificity] = runNN(Pacient , NeuralNetwork, DetectionMo
         trainX=num2cell(trainX,1);
         testX=num2cell(testX,1)
         
-        if trainMode == 1
-            numFeatures = 29;
-            numClasses = 3;
-            HiddenUnits= 10;
-            layers = [ ...
-            sequenceInputLayer(numFeatures)
-            lstmLayer(HiddenUnits,'OutputMode','last')
-            fullyConnectedLayer(numClasses)
-            softmaxLayer
-            classificationLayer];
-
-            options = trainingOptions('sgdm','MaxEpochs',50,'Verbose',false,'Plots','training-progress','ExecutionEnvironment','cpu');
-            rng(rng_value);
-            net = trainNetwork(trainX,trainY,layers,options);
-            save(netName, 'net')
-        else
-            %function network
-            load(netName, 'net');
-            net = network(net);
-        end
-        
-        
         predY = predict(net,testX,'ExecutionEnvironment','cpu')';
         [~, predY]= max(predY);
         [~, sensitivity, specificity] = computeMeasures(predY,double(testY'),1);
         
-    elseif NeuralNetwork == NeuralNetworks(3)
+    elseif NeuralNetwork == NeuralNetworks(2)
         [trainX,trainY,testX,testY]=loadImages(Pacient,prob);
         
         if trainMode == 1
@@ -67,10 +44,10 @@ function [sensitivity ,specificity] = runNN(Pacient , NeuralNetwork, DetectionMo
             softmaxLayer
             classificationLayer];
         
-            options = trainingOptions('sgdm','MaxEpochs',50,'Verbose',false,'Plots','training-progress','ExecutionEnvironment','cpu');
-            rng(rng_value);
-            net = trainNetwork(trainX,trainY,layers,options);
-            save(netName, 'net')
+        options = trainingOptions('sgdm','MaxEpochs',50,'Verbose',false,'Plots','training-progress','ExecutionEnvironment','cpu');
+        rng(rng_val);
+        net = trainNetwork(trainX,trainY,layers,options);
+        
         else
             %function network
             load(netName, 'net');
@@ -82,7 +59,7 @@ function [sensitivity ,specificity] = runNN(Pacient , NeuralNetwork, DetectionMo
         [~, sensitivity, specificity] = computeMeasures(predY,double(testY'), DetectionMode);
         
         
-    elseif NeuralNetwork == NeuralNetworks(2)
+    elseif NeuralNetwork == NeuralNetworks(1)
         [trainX,trainY,testX,testY]=loadDataset(Pacient,prob);
         targetsTrain=zeros(3,size(trainY,2));
         for i=1:size(trainY,2)
@@ -103,7 +80,7 @@ function [sensitivity ,specificity] = runNN(Pacient , NeuralNetwork, DetectionMo
             %criar network e treinar
             net = narxnet([1:2],[1:2],10);
             [Xs,Xi,Ai,Ts] = preparets(net,trainX,{},targetsTrain);
-            rng(rng_value);
+            rng(1);
             net = train(net,Xs,Ts,Xi,Ai);
             
             save(netName, 'net')
@@ -125,7 +102,7 @@ function [sensitivity ,specificity] = runNN(Pacient , NeuralNetwork, DetectionMo
         [~, testY]=max(testY);
         [~, sensitivity, specificity] = computeMeasures(predY, testY,DetectionMode);
         
-    elseif NeuralNetwork == NeuralNetworks(1)
+    else
         [trainX,trainY,testX,testY]=loadDataset(Pacient,prob);
         targets=zeros(3,size(trainY,2));
         for i=1:size(trainY,2)
@@ -153,11 +130,6 @@ function [sensitivity ,specificity] = runNN(Pacient , NeuralNetwork, DetectionMo
         q=softmax(q);
         [~, predY]=max(q);
         [~, sensitivity, specificity] = computeMeasures(predY, testY, DetectionMode);
-        
-    else
-        disp("Error");
-        sensitivity = 0.0;
-        specificity = 0.0;
     end
     
 end
