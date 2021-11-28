@@ -1,59 +1,56 @@
 %----------------------NN com diferentes layers para os dois pacientes
-% pacients=["../dataset/44202.mat","../dataset/63502.mat"];
-% [trainX,trainY,testX,testY]=loadDataset(pacients(2),0.8);
-% targets=zeros(3,size(trainY,2));
-% for i=1:size(trainY,2)
-%     targets(trainY(i),i)=1;
-% end
-% 
-% for layers={[20 10],[20],[10]}
-      
-%     net = feedforwardnet(layers{1,1});
-%     net.trainParam.epochs = 100; % maximum epochs
-%     net.divideFcn='dividerand';
-%     net.divideParam.trainRatio = 100/100;
-%     net.divideParam.valRatio   = 0/100;
-%     net.divideParam.testRatio  = 0/100;
-%     rng(1);
-%     [net,tr] = train(net,trainX,targets);
-% 
-%     q=sim(net,testX);
-%     q=softmax(q);
-%     [M, predY]=max(q);
-%     [accuracy, sensibility, specificity] = computeMeasures(predY, testY,1);
-%     X = sprintf(' Accuracy: %.4f \n Sensibility %.4f \n Specificity %.4f',accuracy, sensibility, specificity);
-%     disp(X);
-% end
-% 
-% pacients=["../dataset/44202.mat","../dataset/63502.mat"];
-% [trainX,trainY,testX,testY]=loadDataset(pacients(2),0.8);
-% targets=zeros(3,size(trainY,2));
-% for i=1:size(trainY,2)
-%     targets(trainY(i),i)=1;
-% end
-% 
-% for layers={[20 10],[20],[10]}
-%     accuracies=[];
-%     for i=1:5
-%         net = feedforwardnet(layers{1,1});
-%         net.trainParam.epochs = 100; % maximum epochs
-%         net.divideFcn='dividerand';
-%         net.divideParam.trainRatio = 100/100;
-%         net.divideParam.valRatio   = 0/100;
-%         net.divideParam.testRatio  = 0/100;
-%         rng(i);
-%         [net,tr] = train(net,trainX,targets);
-% 
-%         q=sim(net,testX);
-%         q=softmax(q);
-%         [M, predY]=max(q);
-%         [accuracy, sensibility, specificity] = computeMeasures(predY, testY,1);
-%         X = sprintf(' Accuracy: %.4f \n Sensibility %.4f \n Specificity %.4f',accuracy, sensibility, specificity);
-%         disp(X);
-%         accuracies=[accuracies,accuracy];
-%     end
-%     disp(accuracies);
-% end
+pacients=["../dataset/44202.mat","../dataset/63502.mat"];
+[trainX,trainY,testX,testY]=loadDataset(pacients(1),0.8);
+targets=zeros(3,size(trainY,2));
+for i=1:size(trainY,2)
+    targets(trainY(i),i)=1;
+end
+
+for layers={[20 10],[20],[10]}
+    
+    disp(layers{1,1});
+    net = feedforwardnet(layers{1,1});
+    net.trainParam.epochs = 100; % maximum epochs
+    net.divideFcn='dividerand';
+    net.divideParam.trainRatio = 100/100;
+    net.divideParam.valRatio   = 0/100;
+    net.divideParam.testRatio  = 0/100;
+    rng(1);
+    [net,tr] = train(net,trainX,targets);
+
+    q=sim(net,testX);
+    q=softmax(q);
+    [M, predY]=max(q);
+    [accuracy, sensibility, specificity] = computeMeasures(predY, testY, 1);
+    X = sprintf(' Accuracy: %.4f \n Sensibility %.4f \n Specificity %.4f',accuracy, sensibility, specificity);
+    disp(X);
+end
+
+pacients=["../dataset/44202.mat","../dataset/63502.mat"];
+[trainX,trainY,testX,testY]=loadDataset(pacients(2),0.8);
+targets=zeros(3,size(trainY,2));
+for i=1:size(trainY,2)
+    targets(trainY(i),i)=1;
+end
+
+for layers={[20 10],[20],[10]}
+    disp(layers{1,1});
+    net = feedforwardnet(layers{1,1});
+    net.trainParam.epochs = 100; % maximum epochs
+    net.divideFcn='dividerand';
+    net.divideParam.trainRatio = 100/100;
+    net.divideParam.valRatio   = 0/100;
+    net.divideParam.testRatio  = 0/100;
+    rng(1);
+    [net,tr] = train(net,trainX,targets);
+
+    q=sim(net,testX);
+    q=softmax(q);
+    [M, predY]=max(q);
+    [accuracy, sensibility, specificity] = computeMeasures(predY, testY, 1);
+    X = sprintf(' Accuracy: %.4f \n Sensibility %.4f \n Specificity %.4f',accuracy, sensibility, specificity);
+    disp(X);
+end
 
 %---------------------------Dynamic NN
 % pacients=["../dataset/44202.mat","../dataset/63502.mat"];
@@ -308,38 +305,38 @@
 % disp(mean(accuracies));
 
 %----------lstm c varias configuracoes
-pacients=["../dataset/44202.mat","../dataset/63502.mat"];
-[trainX,trainY,testX,testY]=loadDataset(pacients(2),0.8);
-trainX = normalize(trainX,'range');
-testX = normalize(testX,'range');
-
-trainY=categorical(trainY)';
-testY=categorical(testY)';
-trainX=num2cell(trainX,1);
-testX=num2cell(testX,1);
-
-for HiddenUnits=[5,10,30]
-    accuracies=[];
-    for i=1:5
-        numFeatures = 29;
-        numClasses = 3;
-        layers = [ ...
-            sequenceInputLayer(numFeatures)
-            lstmLayer(HiddenUnits,'OutputMode','last')
-            fullyConnectedLayer(numClasses)
-            softmaxLayer
-            classificationLayer];
-
-        options = trainingOptions('sgdm','MaxEpochs',50,'Verbose',false,'Plots','training-progress','ExecutionEnvironment','cpu');
-        rng(i);
-        net = trainNetwork(trainX,trainY,layers,options);
-
-        predY = predict(net,testX,'ExecutionEnvironment','cpu')';
-        [M, predY]=max(predY);
-        [accuracy, sensibility, specificity] = computeMeasures(predY,double(testY'),1);
-        X = sprintf(' Accuracy: %.4f \n Sensibility %.4f \n Specificity %.4f',accuracy, sensibility, specificity);
-        disp(X);
-        accuracies=[accuracies,accuracy];
-    end
-    disp(mean(accuracies));
-end
+% pacients=["../dataset/44202.mat","../dataset/63502.mat"];
+% [trainX,trainY,testX,testY]=loadDataset(pacients(2),0.8);
+% trainX = normalize(trainX,'range');
+% testX = normalize(testX,'range');
+% 
+% trainY=categorical(trainY)';
+% testY=categorical(testY)';
+% trainX=num2cell(trainX,1);
+% testX=num2cell(testX,1);
+% 
+% for HiddenUnits=[5,10,30]
+%     accuracies=[];
+%     for i=1:5
+%         numFeatures = 29;
+%         numClasses = 3;
+%         layers = [ ...
+%             sequenceInputLayer(numFeatures)
+%             lstmLayer(HiddenUnits,'OutputMode','last')
+%             fullyConnectedLayer(numClasses)
+%             softmaxLayer
+%             classificationLayer];
+% 
+%         options = trainingOptions('sgdm','MaxEpochs',50,'Verbose',false,'Plots','training-progress','ExecutionEnvironment','cpu');
+%         rng(i);
+%         net = trainNetwork(trainX,trainY,layers,options);
+% 
+%         predY = predict(net,testX,'ExecutionEnvironment','cpu')';
+%         [M, predY]=max(predY);
+%         [accuracy, sensibility, specificity] = computeMeasures(predY,double(testY'),1);
+%         X = sprintf(' Accuracy: %.4f \n Sensibility %.4f \n Specificity %.4f',accuracy, sensibility, specificity);
+%         disp(X);
+%         accuracies=[accuracies,accuracy];
+%     end
+%     disp(mean(accuracies));
+% end
