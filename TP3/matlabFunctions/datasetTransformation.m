@@ -1,10 +1,13 @@
-function [outputArg1,outputArg2] = datasetTransformation()
+function [meanRAll,meanGAll,meanBAll] = datasetTransformation(class)
 %DATASETTRANSFORMATION Summary of this function goes here
 %   Detailed explanation goes here
     
-    path = "../Maturity/Class 1/";
+    path = class;
    
     myFiles = dir(fullfile(path,'*.jpg')); %gets all wav files in struct
+    meanRAll=[];
+    meanBAll=[];
+    meanGAll=[];
     for k = 1:length(myFiles)
       fileName = myFiles(k).name;
  
@@ -28,8 +31,15 @@ function [outputArg1,outputArg2] = datasetTransformation()
         meanR = mean2(thresholdRed);
         meanG = mean2(thresholdGreen);
         meanB = mean2(thresholdBlue);
-
-        imshow(greenChannel);
+        
+        meanRAll=[meanRAll meanR];
+        meanBAll=[meanBAll meanB];
+        meanGAll=[meanGAll meanG];
     end
+    
+    meanRAll=mean(meanRAll);
+    meanGAll=mean(meanGAll);
+    meanBAll=mean(meanBAll);
+    
 end
 
