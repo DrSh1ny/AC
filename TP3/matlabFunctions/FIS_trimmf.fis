@@ -1,0 +1,55 @@
+[System]
+Name='FIS_trimmf'
+Type='mamdani'
+Version=2.0
+NumInputs=3
+NumOutputs=1
+NumRules=6
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='r'
+Range=[0 1]
+NumMFs=3
+MF1='low':'trimf',[0.8129 0.86 0.9071]
+MF2='medium':'trimf',[0.8591 0.9062 0.9533]
+MF3='high':'trimf',[0.8788 0.9259 0.973]
+
+[Input2]
+Name='g'
+Range=[0 1]
+NumMFs=3
+MF1='high':'trimf',[0.6043 0.8398 1.075]
+MF2='low':'trimf',[0.5283 0.7638 0.9993]
+MF3='medium':'trimf',[0.5375 0.773 1.008]
+
+[Input3]
+Name='b'
+Range=[0 1]
+NumMFs=3
+MF1='low':'trimf',[0.2693 0.387 0.5047]
+MF2='medium':'trimf',[0.3677 0.4854 0.6031]
+MF3='high':'trimf',[0.4345 0.5522 0.6699]
+
+[Output1]
+Name='tip'
+Range=[0 1]
+NumMFs=6
+MF1='class1':'trimf',[-0.2 3.469e-18 0.2]
+MF2='class2':'trimf',[5.134e-06 0.2 0.4]
+MF3='class3':'trimf',[0.2 0.4 0.6]
+MF4='class4':'trimf',[0.4 0.6 0.8]
+MF5='class5':'trimf',[0.6 0.8 1]
+MF6='class6':'trimf',[0.8 1 1.2]
+
+[Rules]
+1 1 1, 1 (1) : 1
+2 1 3, 2 (1) : 1
+2 2 3, 3 (1) : 1
+3 2 2, 4 (1) : 1
+3 2 2, 5 (1) : 1
+3 3 2, 6 (1) : 1

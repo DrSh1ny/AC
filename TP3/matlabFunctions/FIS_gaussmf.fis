@@ -20,20 +20,20 @@ MF2='medium':'gaussmf',[0.02 0.9062]
 MF3='high':'gaussmf',[0.02 0.9254]
 
 [Input2]
-Name='b'
-Range=[0 1]
-NumMFs=3
-MF1='low':'gaussmf',[0.05 0.387]
-MF2='medium':'gaussmf',[0.05 0.4854]
-MF3='high':'gaussmf',[0.05 0.5522]
-
-[Input3]
 Name='g'
 Range=[0 1]
 NumMFs=3
 MF1='high':'gaussmf',[0.1 0.8398]
 MF2='low':'gaussmf',[0.1 0.7638]
 MF3='medium':'gaussmf',[0.1 0.773]
+
+[Input3]
+Name='b'
+Range=[0 1]
+NumMFs=3
+MF1='low':'gaussmf',[0.05 0.387]
+MF2='medium':'gaussmf',[0.05 0.4854]
+MF3='high':'gaussmf',[0.05 0.5522]
 
 [Output1]
 Name='tip'

@@ -33,8 +33,9 @@ function [meanRAll,meanGAll,meanBAll] = datasetTransformation(class)
         meanB = mean2(thresholdBlue);
         
         meanRAll=[meanRAll meanR];
-        meanBAll=[meanBAll meanB];
         meanGAll=[meanGAll meanG];
+        meanBAll=[meanBAll meanB];
+        
     end
     
     meanRAll=mean(meanRAll);
