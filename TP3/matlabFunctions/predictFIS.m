@@ -1,4 +1,4 @@
-rootPath="../Maturity/Class 1/";
+rootPath="../Maturity/Class 2/";
 myFiles = dir(fullfile(rootPath,'*.jpg'));
 
 for k = 1:length(myFiles)
@@ -6,7 +6,7 @@ for k = 1:length(myFiles)
     fileName = append(rootPath, fileName);
     [meanR,meanG,meanB] =computeMeanChannels(fileName);
     
-    FISMAT=readfis('FIS_gaussmf.fis');
+    FISMAT=readfis('FIS_24Rules_gaussmf.fis');
     predictions = evalfis(FISMAT,[meanR,meanG,meanB]);
     hold on;
     scatter(k,predictions,15,'red');

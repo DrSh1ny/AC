@@ -1,0 +1,82 @@
+[System]
+Name='FIS_24Rules_gaussmf'
+Type='mamdani'
+Version=2.0
+NumInputs=3
+NumOutputs=1
+NumRules=24
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='red'
+Range=[0 1]
+NumMFs=6
+MF1='class1':'gaussmf',[0.02 0.8508]
+MF2='class2':'gaussmf',[0.02 0.8696]
+MF3='class3':'gaussmf',[0.02 0.8966]
+MF4='class4':'gaussmf',[0.02 0.916]
+MF5='class5':'gaussmf',[0.02 0.928]
+MF6='class6':'gaussmf',[0.02 0.9226]
+
+[Input2]
+Name='green'
+Range=[0 1]
+NumMFs=6
+MF1='class1':'gaussmf',[0.02 0.856656523188514]
+MF2='class2':'gaussmf',[0.02 0.8229]
+MF3='class3':'gaussmf',[0.02 0.7791]
+MF4='class4':'gaussmf',[0.02 0.7668]
+MF5='class5':'gaussmf',[0.02 0.7587]
+MF6='class6':'gaussmf',[0.02 0.7689]
+
+[Input3]
+Name='blue'
+Range=[0 1]
+NumMFs=6
+MF1='class1':'gaussmf',[0.02 0.3684]
+MF2='class2':'gaussmf',[0.02 0.4061]
+MF3='class3':'gaussmf',[0.02 0.4458]
+MF4='class4':'gaussmf',[0.02 0.5249]
+MF5='class5':'gaussmf',[0.02 0.5336]
+MF6='class6':'gaussmf',[0.02 0.5708]
+
+[Output1]
+Name='output'
+Range=[0 1]
+NumMFs=6
+MF1='class1':'gaussmf',[0.08493 3.469e-18]
+MF2='class2':'gaussmf',[0.08493 0.2]
+MF3='class3':'gaussmf',[0.08493 0.4]
+MF4='class4':'gaussmf',[0.08493 0.6]
+MF5='class5':'gaussmf',[0.08493 0.8]
+MF6='class6':'gaussmf',[0.08493 1]
+
+[Rules]
+1 1 1, 1 (1) : 1
+2 2 2, 2 (1) : 1
+3 3 3, 3 (1) : 1
+4 4 4, 4 (1) : 1
+5 5 5, 5 (1) : 1
+6 6 6, 6 (1) : 1
+5 4 4, 4 (1) : 1
+6 4 4, 4 (1) : 1
+4 5 5, 5 (1) : 1
+6 5 5, 5 (1) : 1
+5 6 6, 6 (1) : 1
+4 6 6, 6 (1) : 1
+3 4 3, 3 (1) : 1
+3 6 3, 3 (1) : 1
+4 6 4, 4 (1) : 1
+4 5 4, 4 (1) : 1
+4 3 4, 4 (1) : 1
+5 4 5, 5 (1) : 1
+5 6 5, 5 (1) : 1
+6 4 6, 6 (1) : 1
+6 5 6, 6 (1) : 1
+6 3 6, 6 (1) : 1
+4 4 5, 4 (1) : 1
+5 5 4, 5 (1) : 1
