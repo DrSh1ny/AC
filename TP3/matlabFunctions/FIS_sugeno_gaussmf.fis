@@ -1,0 +1,55 @@
+[System]
+Name='FIS_sugeno_gaussmf'
+Type='sugeno'
+Version=2.0
+NumInputs=3
+NumOutputs=1
+NumRules=6
+AndMethod='prod'
+OrMethod='probor'
+ImpMethod='prod'
+AggMethod='sum'
+DefuzzMethod='wtaver'
+
+[Input1]
+Name='red'
+Range=[0 1]
+NumMFs=3
+MF1='low':'gaussmf',[0.02 0.86]
+MF2='medium':'gaussmf',[0.02 0.9062]
+MF3='high':'gaussmf',[0.02 0.9254]
+
+[Input2]
+Name='green'
+Range=[0 1]
+NumMFs=3
+MF1='low':'gaussmf',[0.1 0.7638]
+MF2='medium':'gaussmf',[0.1 0.773]
+MF3='high':'gaussmf',[0.1 0.8398]
+
+[Input3]
+Name='blue'
+Range=[0 1]
+NumMFs=3
+MF1='low':'gaussmf',[0.05 0.387]
+MF2='medium':'gaussmf',[0.05 0.4854]
+MF3='high':'gaussmf',[0.05 0.5522]
+
+[Output1]
+Name='class'
+Range=[0 1]
+NumMFs=6
+MF1='class1':'constant',[0]
+MF2='class2':'constant',[0.5]
+MF3='class3':'constant',[1]
+MF4='class4':'constant',[0]
+MF5='class5':'constant',[0.2]
+MF6='class6':'constant',[0.4]
+
+[Rules]
+1 3 1, 1 (1) : 1
+2 3 3, 2 (1) : 1
+2 1 3, 3 (1) : 1
+3 1 2, 4 (1) : 1
+3 1 2, 5 (1) : 1
+3 2 2, 6 (1) : 1
