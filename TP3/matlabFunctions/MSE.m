@@ -3,7 +3,7 @@ function [output] = MSE(array, value)
 %   Detailed explanation goes here
 
 difference = array - value;
-squared = difference.*2;
+squared = difference.^2;
 output = mean(squared);
     
 end

@@ -37,4 +37,6 @@ maskedRGBImage = RGB;
 % Set background pixels where BW is false to zero.
 maskedRGBImage(repmat(~BW,[1 1 3])) = 0;
 
+maskedRGBImage=double(maskedRGBImage);
+
 end
