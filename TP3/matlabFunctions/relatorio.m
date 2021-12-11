@@ -40,29 +40,38 @@
 
 
 %predictions for each image------------------------------------------------
-for i=1:6
-    rootPath="../dataset/test/";
-    rootPath=append(rootPath,num2str(i));
-    rootPath=append(rootPath,"/");
-    myFiles = dir(fullfile(rootPath,'*.jpg'));
+% predictions=[];
+% truth=[];
+% for i=[1,4]
+%     rootPath="../dataset/test/";
+%     rootPath=append(rootPath,num2str(i));
+%     rootPath=append(rootPath,"/");
+%     myFiles = dir(fullfile(rootPath,'*.jpg'));
+% 
+%     predictions=[];
+%     truth=[];
+%     for k = 1:length(myFiles)
+%         fileName = myFiles(k).name;
+%         fileName = append(rootPath, fileName);
+%         [meanR,meanG,meanB] =computeMeanChannels(fileName);
+% 
+%         FISMAT=readfis('FIS_sugeno_gaussmf.fis');
+%         prediction = evalfis(FISMAT,[meanR,meanG,meanB]);
+%         
+%         predictions=[predictions prediction*6+1];
+%         truth=[truth i];
+%     end
+%     hold on;
+%     scatter(1:length(myFiles),predictions,15);
+% end
+% legend("Class 1","Class 4");
+% 
+% disp(MSE(predictions,truth));
 
-    predictions=[];
-    truth=[];
-    for k = 1:length(myFiles)
-        fileName = myFiles(k).name;
-        fileName = append(rootPath, fileName);
-        [meanR,meanG,meanB] =computeMeanChannels(fileName);
+%mostrar threshold effect--------------------------------------------------
+img=imread("../dataset/train/4/Muestra109_2.jpg");
+[BW,maskedRGBImage] = createMask(img);
 
-        FISMAT=readfis('FIS_gaussmf.fis');
-        prediction = evalfis(FISMAT,[meanR,meanG,meanB]);
-        
-        predictions=[predictions prediction*6];
-        truth=[truth i];
-    end
-%         hold on;
-%         scatter(1:length(myFiles),predictions,15);
-end
-% legend("Class 1","Class 2","Class 3","Class 4","Class 5","Class 6");
-
-disp(MSE(predictions,truth));
+%imshow(img);
+imshow(maskedRGBImage);
 
